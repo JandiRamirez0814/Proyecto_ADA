@@ -1,149 +1,105 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import tkinter as tk
 from tkinter import filedialog
-import random
-
-class Nodo:
-    def __init__(self, dato=None, siguiente=None):
-        self.dato = dato
-        self.siguiente = siguiente
-
-class Calendario:
-    def __init__(self, n):
-        self.n = n
-        self.matriz = [[None] * n for _ in range(2 * (n-1))]
-        for i in range(2 * (n - 1)):
-            for j in range(n):
-                self.matriz[i][j] = Nodo()
-    def __str__(self):
-        output = ""
-        for fila in self.matriz:
-            for nodo in fila:
-                actual = nodo.siguiente
-                while actual:
-                    output += f"{actual.dato} "
-                    actual = actual.siguiente
-                output += "\n"
-        matrix_output = "\n".join(output.splitlines())
-        return matrix_output
-
-def cargar_entrada(archivo):
-    with open(archivo, 'r') as f:
-        n = int(f.readline().strip())
-        M_in = int(f.readline().strip())
-        M_ax = int(f.readline().strip())
-        D = [list(map(int, line.split())) for line in f.readlines()]
-    return n, M_in, M_ax, D
-
-def generar_calendario(n, M_in, M_ax, D, max_intentos=10):
-    listaim=""
-    for _ in range(max_intentos):
-        calendario = Calendario(n)
-
-        equipos_disponibles = list(range(1, n + 1))
-
-        for fecha in range(2 * (n - 1)):
-            equipos_asignados = random.sample(equipos_disponibles, n)
-
-            for j in range(n):
-                equipo_local = equipos_asignados[j]
-                equipo_visitante = equipos_asignados[(j + fecha) % n]
-                if fecha > 0 and calendario.matriz[fecha - 1][j].siguiente.dato == -equipo_visitante:
-                    equipo_local, equipo_visitante = equipo_visitante, equipo_local
-                calendario.matriz[fecha][j].siguiente = Nodo(equipo_local)
-                calendario.matriz[fecha][j].siguiente.siguiente = Nodo(-equipo_visitante)
-                
-            listaim+=str(calendario.matriz[i][j].dato)+" "
-        listaim+="\n"
-    print(listaim)
-    #imprimir calendario 
-    for i in range(0,2*(n-1)):
-        for j in range(0,n):
-            print(calendario.matriz[i][j].dato)
-        print("\n")
-        
-    if validar_calendario(calendario, n, M_in, M_ax) and comprobar_calendario(calendario, n, M_in, M_ax, D):
-            return calendario
-    #mostrar la matriz de calendario
-    raise ValueError("No se pudo generar un calendario válido")
 
 
-def validar_calendario(calendario, n, M_in, M_ax):
-    for j in range(n):
-        gira_actual = 0
-        permanencia_actual = 0
+def elegir_archivo():
+    ruta_archivo = filedialog.askopenfilename(title="Seleccionar archivo", filetypes=[("Archivos de texto", "*.txt")])
+    if ruta_archivo:
+        datos = leer_datos_desde_archivo(ruta_archivo)
+        if datos:
+            n_equipos, min_partidos, max_partidos = datos
+            calendario = generar_calendario(n_equipos, min_partidos, max_partidos)
 
-        for i in range(2 * (n - 1)):
-            if calendario.matriz[i][j].siguiente is not None:
-                actual = calendario.matriz[i][j].siguiente
-                while actual:
-                    if actual.dato is not None:
-                        if actual.dato > 0:
-                            gira_actual = 0
-                            permanencia_actual += 1
-                        else:
-                            permanencia_actual = 0
-                            gira_actual += 1
-
-                        if gira_actual > M_ax or permanencia_actual > M_ax or permanencia_actual < M_in:
-                            return False
-
-                    actual = actual.siguiente
-
-    for i in range(2 * (n - 2)):
-        for j in range(n):
-            if (
-                calendario.matriz[i][j].siguiente is not None and
-                calendario.matriz[i + 2][j].siguiente is not None and
-                calendario.matriz[i][j].siguiente.dato == calendario.matriz[i + 2][j].siguiente.dato
-            ):
-                return False
-
-    return True
-
-
-def comprobar_calendario(calendario, n, M_in, M_ax, D):
-    for i in range(n):
-        actual = calendario.matriz[0][i].siguiente
-        while actual:
-            if actual.dato < 0:
-                rival = abs(actual.dato)
-                distancia = D[i][rival - 1]
-                if distancia > M_ax:
-                    return False
-
-            actual = actual.siguiente
-
-    return True
-
-def cargar_archivo():
-    file_path = filedialog.askopenfilename(filetypes=[("Text files", "*.txt")])
-    if file_path:
-        n, M_in, M_ax, D = cargar_entrada(file_path)
-        try:
-            calendario = generar_calendario(n, M_in, M_ax, D)
-            # Actualiza el widget Text para mostrar el calendario en la interfaz gráfica
             output_text.delete(1.0, tk.END)
-            output_text.insert(tk.END, f"Calendario generado:\n{calendario}\n")
-            if validar_calendario(calendario, n, M_in, M_ax) and comprobar_calendario(calendario, n, M_in, M_ax, D):
-                output_text.insert(tk.END, "El calendario cumple con todas las restricciones.\n")
-            else:
-                output_text.insert(tk.END, "El calendario no cumple con todas las restricciones.\n")
-        except ValueError as e:
+            output_text.insert(tk.END, f"Número de equipos: {n_equipos}\n")
+            output_text.insert(tk.END, f"Mínimo de partidos: {min_partidos}\n")
+            output_text.insert(tk.END, f"Máximo de partidos: {max_partidos}\n")
+            output_text.insert(tk.END, "Calendario generado:\n")
+
+            for fecha, partidos in enumerate(calendario, start=1):
+                output_text.insert(tk.END, f"Fecha {fecha}: {' '.join(map(str, partidos))}\n")
+        else:
             output_text.delete(1.0, tk.END)
-            output_text.insert(tk.END, f"Error: {str(e)}\n")
+            output_text.insert(tk.END, "Error al generar el calendario.")
+    else:
+        output_text.delete(1.0, tk.END)
+        output_text.insert(tk.END, "No se seleccionó ningún archivo.")
 
 
-# Crear la interfaz gráfica
-root = tk.Tk()
-root.title("Generador y Verificador de Calendario")
+def leer_datos_desde_archivo(ruta):
+    try:
+        with open(ruta, 'r') as archivo:
+            lineas = archivo.readlines()
+            n_equipos = int(lineas[0].strip())
+            min_partidos = int(lineas[1].strip())
+            max_partidos = int(lineas[2].strip())
+            return n_equipos, min_partidos, max_partidos
+    except Exception as e:
+        print(f"Error al leer el archivo: {e}")
+        return None
 
-# Botón para cargar archivo
-button = tk.Button(root, text="Cargar Archivo", command=cargar_archivo)
-button.pack(pady=20)
 
-# Widget Text para mostrar el calendario y resultados
-output_text = tk.Text(root, height=10, width=50)
-output_text.pack(pady=20)
+def generar_calendario(n_equipos, min_partidos, max_partidos):
+    if n_equipos % 2 != 0:
+        n_equipos += 1  # Asegurarse de que el número de equipos sea par
 
-# Lanzar la interfaz gráfica
-root.mainloop()
+    calendario = [[0] * n_equipos for _ in range(2 * (n_equipos - 1))]
+
+    for fecha in range(n_equipos - 1):
+        equipos_restantes = list(range(1, n_equipos + 1))
+
+        for equipo_local in range(1, n_equipos + 1):
+            if calendario[fecha][equipo_local - 1] == 0:
+                partidos_positivos = 1
+
+                for _ in range(partidos_positivos):
+                    equipos_contrincantes = [equipo for equipo in equipos_restantes if equipo != equipo_local]
+
+                    if equipos_contrincantes:
+                        equipo_contrincante = min(equipos_contrincantes,
+                                                  key=lambda e: obtener_distancia(equipo_local, e))
+
+                        calendario[fecha][equipo_local - 1] = equipo_contrincante
+                        calendario[fecha][equipo_contrincante - 1] = -equipo_local
+
+                        if equipo_local in equipos_restantes:
+                            equipos_restantes.remove(equipo_local)
+                        if equipo_contrincante in equipos_restantes:
+                            equipos_restantes.remove(equipo_contrincante)
+                    else:
+                        break
+
+        while equipos_restantes:
+            equipo_local = equipos_restantes.pop(0)
+            equipo_contrincante = equipos_restantes.pop(0)
+
+            calendario[fecha][equipo_local - 1] = equipo_contrincante
+            calendario[fecha][equipo_contrincante - 1] = -equipo_local
+
+    for fecha in range(n_equipos - 1, 2 * (n_equipos - 1)):
+        for equipo in range(n_equipos):
+            calendario[fecha][equipo] = -calendario[fecha - (n_equipos - 1)][equipo]
+
+    return calendario
+
+
+def obtener_distancia(equipo1, equipo2):
+    # Puedes personalizar esta función para obtener las distancias reales entre equipos
+    # En este ejemplo, simplemente se devuelve la diferencia absoluta entre los números de equipo
+    return abs(equipo1 - equipo2)
+
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    root.title("Generador y Verificador de Calendario")
+
+    button = tk.Button(root, text="Cargar Archivo", command=elegir_archivo)
+    button.pack(pady=20)
+
+    output_text = tk.Text(root, height=20, width=50)
+    output_text.pack(pady=20)
+
+    root.mainloop()
