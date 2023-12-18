@@ -12,6 +12,14 @@ Funcionales.calendario module
    :undoc-members:
    :show-inheritance:
 
+Funcionales.sol\_ingenua module
+-------------------------------
+
+.. automodule:: Funcionales.sol_ingenua
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 

@@ -5,7 +5,7 @@
 # Creation date: 2023-12-01
 # Edition date: 2023-12-18
 
-# Description: Generador de calendario de partidos de fútbol
+# Description: Generador de calendario de partidos de fútbol optimizado
 
 import tkinter as tk
 from tkinter import filedialog
