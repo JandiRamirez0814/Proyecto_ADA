@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Funcionales.calendario &mdash; documentación de PROYECTO ADA - 1.0</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=4936afed"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/translations.js?v=efdbd0b9"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            PROYECTO ADA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">PROYECTO ADA</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">PROYECTO ADA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Código de módulo</a></li>
+      <li class="breadcrumb-item active">Funcionales.calendario</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Código fuente para Funcionales.calendario</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="c1"># Author: Jandi Ramirez, Paula Lemus, Camilo Viedma</span>
+<span class="c1"># Creation date: 2023-12-01</span>
+<span class="c1"># Edition date: 2023-12-18</span>
+
+<span class="c1"># Description: Generador de calendario de partidos de fútbol</span>
+
+<span class="kn">import</span> <span class="nn">tkinter</span> <span class="k">as</span> <span class="nn">tk</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">filedialog</span>
+
+<div class="viewcode-block" id="elegir_archivo">
+<a class="viewcode-back" href="../../Funcionales.html#Funcionales.calendario.elegir_archivo">[documentos]</a>
+<span class="k">def</span> <span class="nf">elegir_archivo</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Permite al usuario seleccionar un archivo y genera un calendario a partir de los datos del archivo.</span>
+<span class="sd">    </span>
+<span class="sd">    :param ruta: La ruta del archivo.</span>
+<span class="sd">    :type ruta: str</span>
+<span class="sd">    :return: El calendario generado.</span>
+<span class="sd">    :rtype: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ruta_archivo</span> <span class="o">=</span> <span class="n">filedialog</span><span class="o">.</span><span class="n">askopenfilename</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Seleccionar archivo&quot;</span><span class="p">,</span> <span class="n">filetypes</span><span class="o">=</span><span class="p">[(</span><span class="s2">&quot;Archivos de texto&quot;</span><span class="p">,</span> <span class="s2">&quot;*.txt&quot;</span><span class="p">)])</span>
+    <span class="k">if</span> <span class="n">ruta_archivo</span><span class="p">:</span>
+        <span class="n">datos</span> <span class="o">=</span> <span class="n">leer_datos_desde_archivo</span><span class="p">(</span><span class="n">ruta_archivo</span><span class="p">)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        :param datos: Los datos leídos del archivo.</span>
+<span class="sd">        :type datos: tuple</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">datos</span><span class="p">:</span>
+            <span class="n">n_equipos</span><span class="p">,</span> <span class="n">min_partidos</span><span class="p">,</span> <span class="n">max_partidos</span><span class="p">,</span> <span class="n">distancias</span> <span class="o">=</span> <span class="n">datos</span>
+            <span class="n">calendario</span> <span class="o">=</span> <span class="n">generar_calendario</span><span class="p">(</span><span class="n">n_equipos</span><span class="p">,</span> <span class="n">min_partidos</span><span class="p">,</span> <span class="n">max_partidos</span><span class="p">,</span> <span class="n">distancias</span><span class="p">)</span>
+            
+            <span class="c1"># Limpiar el área de texto y mostrar el calendario</span>
+            <span class="n">output_text</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">tk</span><span class="o">.</span><span class="n">END</span><span class="p">)</span>
+            <span class="n">output_text</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">tk</span><span class="o">.</span><span class="n">END</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Número de equipos: </span><span class="si">{</span><span class="n">n_equipos</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">output_text</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">tk</span><span class="o">.</span><span class="n">END</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Mínimo de partidos: </span><span class="si">{</span><span class="n">min_partidos</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">output_text</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">tk</span><span class="o">.</span><span class="n">END</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Máximo de partidos: </span><span class="si">{</span><span class="n">max_partidos</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">output_text</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">tk</span><span class="o">.</span><span class="n">END</span><span class="p">,</span> <span class="s2">&quot;Calendario generado:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">            :param calendario: El calendario generado.</span>
+<span class="sd">            :type calendario: list</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">for</span> <span class="n">fecha</span><span class="p">,</span> <span class="n">partidos</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">calendario</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">                :param fecha: La fecha.</span>
+<span class="sd">                :type fecha: int</span>
+<span class="sd">                :param partidos: Los partidos de la fecha.</span>
+<span class="sd">                :type partidos: list</span>
+<span class="sd">                &quot;&quot;&quot;</span>
+                <span class="n">output_text</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">tk</span><span class="o">.</span><span class="n">END</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Fecha </span><span class="si">{</span><span class="n">fecha</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="w"> </span><span class="n">partidos</span><span class="p">))</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">output_text</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">tk</span><span class="o">.</span><span class="n">END</span><span class="p">)</span>
+            <span class="n">output_text</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">tk</span><span class="o">.</span><span class="n">END</span><span class="p">,</span> <span class="s2">&quot;Error al generar el calendario.&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">output_text</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">tk</span><span class="o">.</span><span class="n">END</span><span class="p">)</span>
+        <span class="n">output_text</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">tk</span><span class="o">.</span><span class="n">END</span><span class="p">,</span> <span class="s2">&quot;No se seleccionó ningún archivo.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="leer_datos_desde_archivo">
+<a class="viewcode-back" href="../../Funcionales.html#Funcionales.calendario.leer_datos_desde_archivo">[documentos]</a>
+<span class="k">def</span> <span class="nf">leer_datos_desde_archivo</span><span class="p">(</span><span class="n">ruta</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Lee los datos de un archivo.</span>
+
+<span class="sd">    :param ruta: La ruta del archivo.</span>
+<span class="sd">    :type ruta: str</span>
+<span class="sd">    :return: Los datos leídos del archivo.</span>
+<span class="sd">    :rtype: tuple</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">ruta</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">archivo</span><span class="p">:</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">            :param archivo: El archivo.</span>
+<span class="sd">            :type archivo: file</span>
+<span class="sd">            :return: Los datos leídos del archivo.</span>
+<span class="sd">            :rtype: tuple</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">lineas</span> <span class="o">=</span> <span class="n">archivo</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+            
+            <span class="c1"># Leer el número de equipos y los límites de partidos</span>
+            <span class="n">n_equipos</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">lineas</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+            <span class="n">min_partidos</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">lineas</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+            <span class="n">max_partidos</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">lineas</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+<span class="w">            </span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">            :param n_equipos: El número de equipos en el torneo.</span>
+<span class="sd">            :type n_equipos: int</span>
+<span class="sd">            :param min_partidos: El número mínimo de partidos que un equipo debe jugar.</span>
+<span class="sd">            :type min_partidos: int</span>
+<span class="sd">            :param max_partidos: El número máximo de partidos que un equipo puede jugar.</span>
+<span class="sd">            :type max_partidos: int</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+
+            <span class="c1"># Leer la matriz de distancias</span>
+            <span class="n">distancias</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">linea</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span> <span class="k">for</span> <span class="n">linea</span> <span class="ow">in</span> <span class="n">lineas</span><span class="p">[</span><span class="mi">3</span><span class="p">:]]</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">            :param distancias: Una matriz de distancias entre los equipos.</span>
+<span class="sd">            :type distancias: list</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+
+            <span class="k">return</span> <span class="n">n_equipos</span><span class="p">,</span> <span class="n">min_partidos</span><span class="p">,</span> <span class="n">max_partidos</span><span class="p">,</span> <span class="n">distancias</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error al leer el archivo: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="generar_calendario_desde_archivo">
+<a class="viewcode-back" href="../../Funcionales.html#Funcionales.calendario.generar_calendario_desde_archivo">[documentos]</a>
+<span class="k">def</span> <span class="nf">generar_calendario_desde_archivo</span><span class="p">(</span><span class="n">ruta</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Genera un calendario a partir de los datos de un archivo.</span>
+
+<span class="sd">    :param ruta: La ruta del archivo.</span>
+<span class="sd">    :type ruta: str</span>
+<span class="sd">    :return: El calendario generado.</span>
+<span class="sd">    :rtype: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">datos</span> <span class="o">=</span> <span class="n">leer_datos_desde_archivo</span><span class="p">(</span><span class="n">ruta</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">    :param datos: Los datos leídos del archivo.</span>
+<span class="sd">    :type datos: tuple</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">datos</span><span class="p">:</span>
+        <span class="n">n_equipos</span><span class="p">,</span> <span class="n">min_partidos</span><span class="p">,</span> <span class="n">max_partidos</span><span class="p">,</span> <span class="n">distancias</span> <span class="o">=</span> <span class="n">datos</span>
+        <span class="n">calendario</span> <span class="o">=</span> <span class="n">generar_calendario</span><span class="p">(</span><span class="n">n_equipos</span><span class="p">,</span> <span class="n">min_partidos</span><span class="p">,</span> <span class="n">max_partidos</span><span class="p">,</span> <span class="n">distancias</span><span class="p">)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        :param calendario: El calendario generado.</span>
+<span class="sd">        :type calendario: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">calendario</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+
+<div class="viewcode-block" id="generar_calendario">
+<a class="viewcode-back" href="../../Funcionales.html#Funcionales.calendario.generar_calendario">[documentos]</a>
+<span class="k">def</span> <span class="nf">generar_calendario</span><span class="p">(</span><span class="n">n_equipos</span><span class="p">,</span> <span class="n">min_partidos</span><span class="p">,</span> <span class="n">max_partidos</span><span class="p">,</span> <span class="n">distancias</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Genera un calendario para un torneo de equipos.</span>
+
+<span class="sd">    :param n_equipos: El número de equipos en el torneo.</span>
+<span class="sd">    :type n_equipos: int</span>
+<span class="sd">    :param min_partidos: El número mínimo de partidos que un equipo debe jugar.</span>
+<span class="sd">    :type min_partidos: int</span>
+<span class="sd">    :param max_partidos: El número máximo de partidos que un equipo puede jugar.</span>
+<span class="sd">    :type max_partidos: int</span>
+<span class="sd">    :param distancias: Una matriz de distancias entre los equipos.</span>
+<span class="sd">    :type distancias: list</span>
+<span class="sd">    :return: El calendario del torneo.</span>
+<span class="sd">    :rtype: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">n_equipos</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">n_equipos</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># Asegurarse de que el número de equipos sea par</span>
+
+    <span class="n">calendario</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_equipos</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">n_equipos</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))]</span>
+    <span class="n">partidos_jugados</span> <span class="o">=</span> <span class="p">[[</span><span class="kc">False</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_equipos</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_equipos</span><span class="p">)]</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :param calendario: El calendario del torneo.</span>
+<span class="sd">    :type calendario: list</span>
+<span class="sd">    :param partidos_jugados: Una matriz que indica si un equipo ha jugado contra otro.</span>
+<span class="sd">    :type partidos_jugados: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">fecha</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_equipos</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">equipos_restantes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_equipos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param equipos_restantes: Una lista de equipos que aún no han sido emparejados.</span>
+<span class="sd">        :type equipos_restantes: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">equipo_local</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_equipos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :param equipo_local: El equipo local.</span>
+<span class="sd">            :type equipo_local: int</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">if</span> <span class="n">calendario</span><span class="p">[</span><span class="n">fecha</span><span class="p">][</span><span class="n">equipo_local</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">partidos_positivos</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                :param partidos_positivos: El número de partidos positivos que un equipo debe jugar.</span>
+<span class="sd">                :type partidos_positivos: int</span>
+<span class="sd">                &quot;&quot;&quot;</span>
+                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">partidos_positivos</span><span class="p">):</span>
+                    <span class="n">equipos_contrincantes</span> <span class="o">=</span> <span class="p">[</span><span class="n">equipo</span> <span class="k">for</span> <span class="n">equipo</span> <span class="ow">in</span> <span class="n">equipos_restantes</span> <span class="k">if</span> <span class="n">equipo</span> <span class="o">!=</span> <span class="n">equipo_local</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">partidos_jugados</span><span class="p">[</span><span class="n">equipo_local</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">equipo</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]]</span>
+<span class="w">                    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                    :param equipos_contrincantes: Una lista de equipos que aún no han jugado contra el equipo local.</span>
+<span class="sd">                    :type equipos_contrincantes: list</span>
+<span class="sd">                    &quot;&quot;&quot;</span>
+                    
+                    <span class="k">if</span> <span class="n">equipos_contrincantes</span><span class="p">:</span>
+                        <span class="n">equipo_contrincante</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">equipos_contrincantes</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="n">distancias</span><span class="p">[</span><span class="n">equipo_local</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">e</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+<span class="w">                        </span><span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">                        :param equipo_contrincante: El equipo contrincante.</span>
+<span class="sd">                        :type equipo_contrincante: int</span>
+<span class="sd">                        &quot;&quot;&quot;</span>
+                    
+                        <span class="n">calendario</span><span class="p">[</span><span class="n">fecha</span><span class="p">][</span><span class="n">equipo_local</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">equipo_contrincante</span>
+                        <span class="n">calendario</span><span class="p">[</span><span class="n">fecha</span><span class="p">][</span><span class="n">equipo_contrincante</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">equipo_local</span>
+
+                        <span class="n">partidos_jugados</span><span class="p">[</span><span class="n">equipo_local</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">equipo_contrincante</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">partidos_jugados</span><span class="p">[</span><span class="n">equipo_contrincante</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">equipo_local</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+                        <span class="k">if</span> <span class="n">equipo_local</span> <span class="ow">in</span> <span class="n">equipos_restantes</span><span class="p">:</span>
+                            <span class="n">equipos_restantes</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">equipo_local</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">equipo_contrincante</span> <span class="ow">in</span> <span class="n">equipos_restantes</span><span class="p">:</span>
+                            <span class="n">equipos_restantes</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">equipo_contrincante</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">break</span>
+
+        <span class="c1"># Nueva parte: emparejar equipos restantes</span>
+        <span class="k">while</span> <span class="n">equipos_restantes</span><span class="p">:</span>
+            <span class="n">equipo_local</span> <span class="o">=</span> <span class="n">equipos_restantes</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">equipo_contrincante</span> <span class="o">=</span> <span class="n">equipos_restantes</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">            :param equipo_contrincante: El equipo contrincante.</span>
+<span class="sd">            :type equipo_contrincante: int</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+
+            <span class="n">calendario</span><span class="p">[</span><span class="n">fecha</span><span class="p">][</span><span class="n">equipo_local</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">equipo_contrincante</span>
+            <span class="n">calendario</span><span class="p">[</span><span class="n">fecha</span><span class="p">][</span><span class="n">equipo_contrincante</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">equipo_local</span>
+
+            <span class="n">partidos_jugados</span><span class="p">[</span><span class="n">equipo_local</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">equipo_contrincante</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">partidos_jugados</span><span class="p">[</span><span class="n">equipo_contrincante</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">equipo_local</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="c1"># Partidos negativos (invertir partidos positivos para la segunda mitad del calendario)</span>
+    <span class="k">for</span> <span class="n">fecha</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_equipos</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">n_equipos</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">equipo</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_equipos</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">            :param equipo: El equipo.</span>
+<span class="sd">            :type equipo: int&quot;&quot;&quot;</span>
+            <span class="n">calendario</span><span class="p">[</span><span class="n">fecha</span><span class="p">][</span><span class="n">equipo</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">calendario</span><span class="p">[</span><span class="n">fecha</span> <span class="o">-</span> <span class="p">(</span><span class="n">n_equipos</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)][</span><span class="n">equipo</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">calendario</span></div>
+
+
+<div class="viewcode-block" id="imprimir_calendario">
+<a class="viewcode-back" href="../../Funcionales.html#Funcionales.calendario.imprimir_calendario">[documentos]</a>
+<span class="k">def</span> <span class="nf">imprimir_calendario</span><span class="p">(</span><span class="n">calendario</span><span class="p">,</span> <span class="n">n_equipos</span><span class="p">,</span> <span class="n">min_partidos</span><span class="p">,</span> <span class="n">max_partidos</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Imprime el calendario del torneo.</span>
+
+<span class="sd">    :param calendario: El calendario del torneo.</span>
+<span class="sd">    :type calendario: list</span>
+<span class="sd">    :param n_equipos: El número de equipos en el torneo.</span>
+<span class="sd">    :type n_equipos: int</span>
+<span class="sd">    :param min_partidos: El número mínimo de partidos que un equipo debe jugar.</span>
+<span class="sd">    :type min_partidos: int</span>
+<span class="sd">    :param max_partidos: El número máximo de partidos que un equipo puede jugar.</span>
+<span class="sd">    :type max_partidos: int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Número de equipos: </span><span class="si">{</span><span class="n">n_equipos</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mínimo de partidos: </span><span class="si">{</span><span class="n">min_partidos</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Máximo de partidos: </span><span class="si">{</span><span class="n">max_partidos</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">fecha</span><span class="p">,</span> <span class="n">partidos</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">calendario</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        :param fecha: La fecha.</span>
+<span class="sd">        :type fecha: int&quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fecha </span><span class="si">{</span><span class="n">fecha</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">partidos</span><span class="p">)))</span></div>
+
+        
+        
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+    <span class="n">root</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Generador y Verificador de Calendario&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Botón para cargar archivo</span>
+    <span class="n">button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Cargar Archivo&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">elegir_archivo</span><span class="p">)</span>
+    <span class="n">button</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+    <span class="c1"># Widget Text para mostrar el calendario y resultados</span>
+    <span class="n">output_text</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+    <span class="n">output_text</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+    <span class="c1"># Lanzar la interfaz gráfica</span>
+    <span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2023, Jandi Ramirez, Paula Lemus, Camilo Viedma.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
